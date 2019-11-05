@@ -1,18 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CardList from '../views/CardList.vue'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home,
-  },
-  {
-    path: '/cards',
     name: 'cardList',
     component: CardList,
     meta: {
