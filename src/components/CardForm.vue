@@ -3,8 +3,8 @@
         <v-card-title>{{ title }}</v-card-title>
         <v-form>
             <v-text-field  class="px-6" 
-                        v-model="formValues.title" 
-                        label="title" 
+                        v-model="formValues.name" 
+                        label="name" 
                         required 
                         type="text" ></v-text-field>
             <v-text-field  class="px-6" 

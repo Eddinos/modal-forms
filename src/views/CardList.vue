@@ -9,7 +9,7 @@
                   lazy-src="/img/lemon.jpg"
                   :src="card.img"></v-img>
 
-          <v-card-title>{{ card.title }}</v-card-title>
+          <v-card-title>{{ card.name }}</v-card-title>
 
           <v-card-text>{{ card.description }}</v-card-text>
 
@@ -29,10 +29,11 @@
         </v-card>
       </v-col>
     </v-row>
-    
+
     <v-dialog v-model="openDialog" 
               max-width="560" >
       <router-view></router-view>
+
     </v-dialog>
   </v-container>
 </template>

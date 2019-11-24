@@ -1,6 +1,6 @@
 <template>
     <div class="CardUpdate">
-        <card-form title="update this card" 
+        <card-form title="Create a new card" 
                    @submit="handleSubmit" 
                    @cancel="closeForm"/>        
     </div>

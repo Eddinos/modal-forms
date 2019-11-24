@@ -7,22 +7,22 @@ export default new Vuex.Store({
   state: {
     cards: [{
       id: 1,
-      title: 'Lemon',
+      name: 'Lemon',
       img: '/img/lemon.jpg',
       description: 'acid yellow fruit'
     }, {
       id: 2,
-      title: 'Watermelon',
+      name: 'Watermelon',
       img: '/img/watermelon.jpg',
       description: 'Red inside, green outside'
     }, {
       id: 3,
-      title: 'Grapes',
+      name: 'Grapes',
       img: '/img/grapes.jpg',
       description: 'Small but tasty'
     }, {
       id: 4,
-      title: 'Coconut',
+      name: 'Coconut',
       img: '/img/coconut.jpg',
       description: 'Hides under a hard shell'
     }]
