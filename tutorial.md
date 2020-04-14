@@ -45,12 +45,12 @@ Le formulaire de suppression est plus simple, il faudra juste afficher une fenê
 <p>Au passage, il est intéressant d’activer le <code>props: true</code> pour passer les props en tant que paramètres de la route et découpler le composant du router.</p>
 <p>Puisque la <code>router-view</code> est à l’intérieur de la modale, elle sera remplacée par le composant défini dans notre router.</p>
 <p>Il ne nous manque plus qu’un moyen d’activer la modale, d’autant plus si on veut rendre possible l’arrivée sur la page de formulaire directement sans naviguer depuis la liste. Pour cela on va utiliser l’attribut <code>meta</code>, qui permet de faire passer des données relatives à la route, ici on veut que ces routes soient liées à l’apparition d’une modale donc on va ajouter un <code>dialog = true</code> à chacune d’elle.</p>
-<p>|<strong><img src="https://lh3.googleusercontent.com/L-sBRuMvExy_Ww5GAV55I3Vot5tQaO8Io_XGehdTXfzPz5fajtTGiAsx0gWcGuEQY5VFflK61rUO8n0wJV915qw43KhpptZfsPqDwA4I_mh-WZbdSC262YzgQ98P7KVXBKpl4xRO" alt=""></strong></p>
+<p><strong><img src="https://lh3.googleusercontent.com/L-sBRuMvExy_Ww5GAV55I3Vot5tQaO8Io_XGehdTXfzPz5fajtTGiAsx0gWcGuEQY5VFflK61rUO8n0wJV915qw43KhpptZfsPqDwA4I_mh-WZbdSC262YzgQ98P7KVXBKpl4xRO" alt=""></strong></p>
 <blockquote>
 <p>Ensuite on peut utiliser la valeur stockée en meta de la route<br>
 courante en tant que <code>v-model</code> de notre pop-up.</p>
 </blockquote>
-<p>|<strong><img src="https://lh4.googleusercontent.com/nHsV9Yk6EyaapbNkkckNZvWzhyAvCb4ZNEKCsyPRNHz2L36ESl6IZAsqt9XlYxz1a7kTI5X00wfxKZYbRbHdajDy2-jfKAbX5jRq3BE5Ta9L1d8n_8QI08KD45FX5KIjqqNP-nli" alt=""></strong></p>
+<p><strong><img src="https://lh4.googleusercontent.com/nHsV9Yk6EyaapbNkkckNZvWzhyAvCb4ZNEKCsyPRNHz2L36ESl6IZAsqt9XlYxz1a7kTI5X00wfxKZYbRbHdajDy2-jfKAbX5jRq3BE5Ta9L1d8n_8QI08KD45FX5KIjqqNP-nli" alt=""></strong></p>
 <blockquote>
 <p>Il faut seulement tenir compte que pour refermer le <code>v-dialog</code>, on veut juste retourner à la route mère qui n’a pas de pop-up à afficher</p>
 </blockquote>
