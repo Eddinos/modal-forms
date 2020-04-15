@@ -1,4 +1,5 @@
-<h1 id="section"></h1>
+<h1 id="formulaires-modaux-avec-vue.js-et-vuetify">Formulaires modaux avec Vue.JS et Vuetify</h1>
+<p><strong><img src="https://lh4.googleusercontent.com/KybrHgJwkj9SkJHYHJU7zLjfo5qcddH9IZf3ewZnjkuChcImTpzLOV2A_ucLJVwTDptfrqTCb_VEFFMkf0vck9gFOWwWROUqbRbDceMDfacKa06iidJXHaRu8FAwCFsMcvrUoAx2" alt=""></strong></p>
 <p>Les challenges du développement front-end sont nombreux et variés, et il requiert de<br>
 toujours faire preuve de créativité pour trouver les solutions adaptées.</p>
 <p>Parmi ceux-ci, certains sont récurrents, on pense par exemple à la création d’interfaces<br>
@@ -8,13 +9,20 @@ dans cet exemple nous allons utiliser VueJS et son router client vue-router, cou
 pour l’apparence graphique.<br>
 Vuetify est une bibliothèque de composants graphiques material design, on l’utilisera ici pour simplifier l’aspect design, mais il est tout à fait possible de lui préférer une autre librairie ou de choisir sa propre solution.<br>
 Il n’est pas nécessaire de la connaître pour la suite de la lecture.</p>
-<h1 id="files">Files</h1>
+<h2 id="objectifs-fonctionnels">Objectifs fonctionnels</h2>
 <p>On veut donc lister plusieurs items d’une ressource, pourquoi pas quelques fruits, tout<br>
 en détaillant leurs attributs. On souhaite donc avoir pour chaque fruit un nom, une description et une image. Pour simplifier cet exemple on va se contenter de stocker une url pour afficher nos images.</p>
 <p><strong><img src="https://lh6.googleusercontent.com/bs860GYsUcC7ayNgS7GtcE2uu45g0bOJf5qHksbNvW4LiprjpAgrGQ23S9rsHb48tPaXB7WtXr_8WD5FEWZnPJexonozf-u7hvatmhbW9apqwG-cpHtrxviQaw7HAkzFFXG2Sv58" alt=""></strong></p>
-<p>La donnée par défaut de notre application va donc ressembler à ceci. On peut en déduire le template suivant :</p>
+<blockquote>
+<p>La donnée par défaut de notre application va donc ressembler à ceci.<br>
+On peut en déduire le template suivant :</p>
+</blockquote>
 <p><strong><img src="https://lh3.googleusercontent.com/3t6WYLgUS7pewHdDdDG8fQ6UFHYIttcSVVd-WWSplRy2Wo3Td8FmIjKeda_0sjU1FRHCMt5_g4J2Q1wxoBywxeu_jLp6UDwz-70kJwNtDvI3JTFyH_0Efblke7d4gjzKkUxqp_rR" alt=""></strong></p>
-<p>Ici j’ai choisi de représenter la liste sous forme de cartes, mais on pourrait imaginer la même approche avec tout autre forme de représentation.</p>
+<blockquote>
+<p>Ici j’ai choisi de représenter la liste sous forme de cartes, mais on<br>
+pourrait imaginer la même approche avec tout autre forme de<br>
+représentation.</p>
+</blockquote>
 <p><strong><img src="https://lh4.googleusercontent.com/0V7gdytlFZpYly7bGhsRKpN2867ayJUYEZLOkJTXBnB63ygnMsaT0RndJdIt0vErHZgQmUVB2cMZFj4Z8RWr8FYX0dQGyT0cvlToLSlrOXgTb5gTX8xXkZLmznYcYXty7ug3lPyk" alt=""></strong></p>
 <p>J’ai également ajouté des boutons d’ajout, de modification et de suppression de fruits. En effet, on souhaite pouvoir ajouter des items à notre liste, en retirer ou modifier les propriétés de chacun d’eux.<br>
 Pour cela on va avoir besoin d’un formulaire de création, un autre de modification, et un dernier de suppression.</p>
@@ -28,16 +36,19 @@ Le formulaire de suppression est plus simple, il faudra juste afficher une fenê
 <blockquote>
 <p>La pop-up de confirmation de suppression</p>
 </blockquote>
+<h2 id="approche-technique-directe">Approche technique directe</h2>
 <p>Le composant <code>v-dialog</code> de vuetify affiche une modale en fonction de la valeur de la variable associée à son <code>v-model</code>, ce qui est très utile pour ce que l’on cherche à faire. Immédiatement, on pourrait envisager d’avoir plusieurs <code>v-dialog</code>, qui s’afficheront conditionnellement pour contenir nos formulaires.</p>
 <p>Puisque les formulaires de modification et de création contiennent les même champs, on peut les factoriser et n’avoir que 2 <code>v-dialog</code> qui s’affichent selon les actions de l’utilisateur.</p>
 <p><strong><img src="https://lh6.googleusercontent.com/BpMcWJz0l6JtAt-hlZ2mcfXbtkvdkgW9dlyr1XKWTuv3LrZNtSQqXKpkbRVSnRPTNjX_7L2p1BiIPq79jCCsqmvsMNp9vz4364ng-e6HAvGbOI0mOqcpOwEtGE3KQeERhsZ86oF9" alt=""></strong></p>
 <blockquote>
 <p>Cette figure montre le code du composant formulaire, avec un champ pour chaque propriété de notre ressource, et deux boutons émettant des événements de soumission ou d’annulation de ce formulaire.</p>
 </blockquote>
-<p>Cette solution est-elle satisfaisante ? Non, d’abord les formulaires d’édition et de création peuvent changer, selon si l’on a des items de plusieurs types, des valeurs par défaut à gérer à la création, ou des contraintes à la modification. Ensuite si l’on voulait afficher un autre formulaire, par exemple pour une ressource annexe, il faudrait ajouter autant de v-dialog que de formulaires et on risque de congestionner le template et de complexifier le composant en lui attribuant la responsabilité de la logique d’affichage des fenêtres et du formatage des données.</p>
-<p>On comprend rapidement qu’il faut factoriser tous les formulaires dans le même v-dialog, et les afficher conditionnellement. VueJS nous offre la possibilité de créer des composants dynamiques, et ça pourrait être une solution, mais il faudrait alors conserver la logique de différenciation dans le composant de listing et ce serait au détriment de sa réutilisabilité, de son indépendance et de la faciliter à le tester.</p>
-<p>Bien heureusement, nous avons vue-router à disposition et c’est l’endroit idéal pour transférer cette responsabilité dans un fichier de configuration facilement modifiable et surtout extensible.</p>
-<p>Plutôt qu’un composant dynamique, on peut utiliser une router-view.</p>
+<h3 id="une-maintenance-verbeuse-et-complexe">Une maintenance verbeuse et complexe</h3>
+<p>Cette solution est-elle satisfaisante ? Non, d’abord les formulaires d’édition et de création peuvent changer, selon si l’on a des items de plusieurs types, des valeurs par défaut à gérer à la création, ou des contraintes à la modification. Ensuite si l’on voulait afficher un autre formulaire, par exemple pour une ressource annexe, il faudrait ajouter autant de <code>v-dialog</code> que de formulaires et on risque de congestionner le template et de complexifier le composant en lui attribuant la responsabilité de la logique d’affichage des fenêtres et du formatage des données.</p>
+<p>On comprend rapidement qu’il faut factoriser tous les formulaires dans le même <code>v-dialog</code>, et les afficher conditionnellement. VueJS nous offre la possibilité de créer des composants dynamiques, et ça pourrait être une solution, mais il faudrait alors conserver la logique de différenciation dans le composant de listing et ce serait au détriment de sa réutilisabilité, de son indépendance et de la faciliter à le tester.</p>
+<h2 id="solution-avec-vue-router">Solution avec vue-router</h2>
+<p>Bien heureusement, nous avons la librairie de routing client <code>vue-router</code> à disposition et c’est l’outil idéal pour transférer cette responsabilité dans un fichier de configuration facilement modifiable et surtout extensible.</p>
+<p>Plutôt qu’un composant dynamique, on va alors utiliser une <code>router-view</code>.</p>
 <p><strong><img src="https://lh6.googleusercontent.com/F7ZQn5b9hOheLCtiJFpQ6XmPTFmYAaWI6IBNqT9qxPC02h-g9XETkwAaJ0ZUmTzB3zFvZs-S91uBvjxyVmoS3l_v2tAcBAyZRS6zILJxnfOGB6kJC5KclxlF-gu9M8RHZDEzzGX2" alt=""></strong></p>
 <blockquote>
 <p>La liste va être présente sur la route mère et on peut lui ajouter autant d’enfants que l’on veut, en associant chacune d’elle avec son composant.</p>
@@ -54,19 +65,24 @@ courante en tant que <code>v-model</code> de notre pop-up.</p>
 <blockquote>
 <p>Il faut seulement tenir compte que pour refermer le <code>v-dialog</code>, on veut juste retourner à la route mère qui n’a pas de pop-up à afficher</p>
 </blockquote>
+<h3 id="composants-intermédiaires">Composants intermédiaires</h3>
 <p>Pour complètement finir de retirer la responsabilité de la gestion des données du formulaire du composant de listing, on va passer par des composants Create / Delete / Update, ils permettent de :</p>
 <ul>
-<li><em>Gérer l’affichage d’un formulaire ou d’un autre selon les paramètres (contenus dans les props)</em></li>
-<li><em>Extraire la logique de la liste</em></li>
-<li><em>Gérer la soumission, l’annulation ou tout autre évènement du formulaire</em></li>
-<li><em>Formater la donnée avant son enregistrement</em></li>
+<li>Gérer l’affichage d’un formulaire ou d’un autre selon les paramètres (contenus dans les props)</li>
+<li>Extraire la logique de la liste</li>
+<li>Gérer la soumission, l’annulation ou tout autre évènement du formulaire</li>
+<li>Formater la donnée avant son enregistrement</li>
 </ul>
-<p><strong><img src="https://lh3.googleusercontent.com/O2YhODXljJYpKvJPB4Hzfdgro0RgV0ezdBILg3b-CUeApKE8h3zZhJCz-dqdlERfyXhDbN0BhDvdLy2WmC8c8yhP7ebty17cJwdQyr6ZMTgjkDFpg-IsvxbEeJrOhU6mL095eUsL" alt=""></strong><br>
-Si on prend en exemple ce composant <code>CardUpdate</code>, on voit qu’on utilise le <code>CardForm</code> créé précédemment. Si on avait un type de ressource qui nécessiterait un autre formulaire, on pourrait s’occuper de traiter les conditions ici.</p>
+<p><strong><img src="https://lh3.googleusercontent.com/O2YhODXljJYpKvJPB4Hzfdgro0RgV0ezdBILg3b-CUeApKE8h3zZhJCz-dqdlERfyXhDbN0BhDvdLy2WmC8c8yhP7ebty17cJwdQyr6ZMTgjkDFpg-IsvxbEeJrOhU6mL095eUsL" alt=""></strong></p>
+<blockquote>
+<p>Notre composant CardUpdate.vue</p>
+</blockquote>
+<p>Si on prend en exemple ce composant <code>CardUpdate</code>, on voit qu’on utilise le <code>CardForm</code> créé précédemment. Si on avait un type de ressource qui nécessitait un autre formulaire, on pourrait s’occuper de traiter les conditions ici.</p>
 <p>La mécanique pour refermer le formulaire est toujours de revenir vers notre page principale qui a été définie dans le router pour ne pas avoir de fenêtre de dialogue.<br>
 Pas besoin de traitement lourd pour cet exemple mais on pourrait bien imaginer un formatage de données avant de l’envoyer à une API, ou bien la récupération de cette donnée si elle n’avait pas été chargée entièrement auparavant.</p>
 <p>De la même manière, un composant <code>CardCreate</code> nous permet d’ajouter un élément à notre liste.<br>
 <strong><img src="https://lh3.googleusercontent.com/TwZbUwUxgesGy9y-ycieQfsP5O98fb6OYYt4wHXgAAzPBleXIeiy1apr0anvNp7YocarqLtV9gmoV5FCwGjuxBv8UIHsxWv6d7IZiru1223dvZ2peVf-xzK4V_8jnhtDV92-StJY" alt=""></strong></p>
+<h2 id="conclusion">Conclusion</h2>
 <p>Nous avons donc vu une possibilité de création et d’édition efficace et facile à maintenir avec VueJS et vue-router, grâce à la possibilité d’intégrer des router-view à l’intérieur de composants et de les afficher en fonction de l’url des pages de notre application.<br>
 On notera également qu’il est possible de passer des variables à nos composants en tant que props, ce qui ne les contraint pas à une utilisation uniquement à travers vue-router.<br>
 On a aussi vu qu’il est tout à fait possible via ce procédé d’afficher différents composants, que ce soit un formulaire complet ou une simple pop-up de confirmation.</p>
